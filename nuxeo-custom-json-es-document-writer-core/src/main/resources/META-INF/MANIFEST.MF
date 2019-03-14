@@ -1,0 +1,9 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Vendor: org.nuxeo.addon
+Bundle-Version: 1.0.0
+Bundle-Name: nuxeo-custom-json-es-document-writer-core
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.nuxeo.addon.nuxeo-custom-json-es-document-writer-core;singleton=true
+Nuxeo-Component: OSGI-INF/jsonesdocumentwritercontrib-contrib.xml
