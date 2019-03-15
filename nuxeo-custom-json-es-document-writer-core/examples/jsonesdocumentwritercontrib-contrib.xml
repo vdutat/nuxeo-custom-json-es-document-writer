@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.addon.jsonesdocumentwritercontrib">
+
+  <require>org.nuxeo.elasticsearch.ElasticSearchComponent.contrib</require>
+  
+  <extension target="org.nuxeo.elasticsearch.ElasticSearchComponent" point="elasticSearchDocWriter">
+    <!-- 
+    You might find some help here:
+    https://explorer.nuxeo.com/nuxeo/site/distribution/latest/viewExtensionPoint/org.nuxeo.elasticsearch.ElasticSearchComponent%2d%2delasticSearchDocWriter
+    -->
+    <writer class="org.nuxeo.ecm.automation.jaxrs.io.documents.NatureDirLabelsJsonESDocumentWriter"/>
+    
+  </extension>
+
+</component>
