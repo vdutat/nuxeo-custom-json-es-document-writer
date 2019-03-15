@@ -26,6 +26,26 @@ mvn clean install
 nuxeoctl mp-install nuxeo-custom-json-es-document-writer/nuxeo-custom-json-es-document-writer-package/target/nuxeo-custom-json-es-document-writer-package-*.zip
 ```
 
+# Configuration
+
+Contribute a **XML extension** in your bundle or define a **Studio XML extension** with the following **XML**:
+
+## **XML contribution**
+
+See `nuxeo-custom-json-es-document-writer/nuxeo-custom-json-es-document-writer-core/examples/jsonesdocumentwritercontrib-contrib.xml`.
+
+## **Studio** XML extension
+
+```
+  <require>org.nuxeo.elasticsearch.ElasticSearchComponent.contrib</require>
+  
+  <extension target="org.nuxeo.elasticsearch.ElasticSearchComponent" point="elasticSearchDocWriter">
+
+    <writer class="org.nuxeo.ecm.automation.jaxrs.io.documents.NatureDirLabelsJsonESDocumentWriter"/>
+    
+  </extension>
+```
+
 # Support
 
 **These features are not part of the Nuxeo Production platform, they are not supported**

@@ -9,7 +9,7 @@
 
   <groupId>org.nuxeo.addon</groupId>
   <artifactId>nuxeo-custom-json-es-document-writer-parent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <name>Nuxeo custom json es document writer parent</name>
   <description />
   <packaging>pom</packaging>
