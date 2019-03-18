@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.MissingResourceException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -40,6 +41,7 @@ public abstract class DirectoryLabelsJsonESDocumentWriter extends JsonESDocument
         if (schemas == null || (schemas.length == 1 && "*".equals(schemas[0]))) {
             schemas = doc.getSchemas();
         }
+        log.warn("writeSchemas " + doc.getPathAsString());
         setPropertiesToProcess();
         for (Entry<String, String> entry : propertiesToProcess.entrySet()) {
             String relatedText = computeRelatedText(doc, entry.getKey(), entry.getValue());
@@ -62,9 +64,16 @@ public abstract class DirectoryLabelsJsonESDocumentWriter extends JsonESDocument
             if (!StringUtils.isEmpty(prop)) {
                 PlatformFunctions fn = new PlatformFunctions();
                 for (String lg : getLocales()) {
-                    relatedText += I18NUtils.getMessageString(Constraint.MESSAGES_BUNDLE, fn.getVocabularyLabel(directoryName, prop), new Object[0], Locale.forLanguageTag(lg)) + " ";
-                    if (log.isDebugEnabled()) {
-                        log.debug(Locale.forLanguageTag(lg) + " (" + lg + ")==>" + relatedText);
+                    try {
+                        relatedText += I18NUtils.getMessageString(Constraint.MESSAGES_BUNDLE, fn.getVocabularyLabel(directoryName, prop), new Object[0], Locale.forLanguageTag(lg)) + " ";
+                        if (log.isDebugEnabled()) {
+                            log.debug(Locale.forLanguageTag(lg) + " (" + lg + ")==>" + relatedText);
+                        }
+                    } catch (Exception e) {
+                        log.warn("Unable to retrieve translated '" + lg + "' label in directory " + directoryName + " for key '" + prop + "' for field " + propertyName + " of document " + doc.getPathAsString());
+                        if (log.isDebugEnabled()) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
