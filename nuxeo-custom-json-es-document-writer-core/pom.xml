@@ -5,15 +5,15 @@
   <parent>
     <groupId>org.nuxeo.addon</groupId>
     <artifactId>nuxeo-custom-json-es-document-writer-parent</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
   </parent>
   <artifactId>nuxeo-custom-json-es-document-writer-core</artifactId>
   <name>Nuxeo custom json es document writer core</name>
   <description/>
   <dependencies>
     <dependency>
-      <groupId>org.nuxeo.ecm.automation</groupId>
-      <artifactId>nuxeo-automation-io</artifactId>
+      <groupId>org.nuxeo.elasticsearch</groupId>
+      <artifactId>nuxeo-elasticsearch-core</artifactId>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
@@ -52,6 +52,14 @@
     <dependency>
       <groupId>org.nuxeo.ecm.automation</groupId>
       <artifactId>nuxeo-automation-features</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
     </dependency>
   </dependencies>
 </project>

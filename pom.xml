@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.nuxeo.ecm.distribution</groupId>
     <artifactId>nuxeo-distribution</artifactId>
-    <version>9.10</version>
+    <version>10.10</version>
   </parent>
 
   <groupId>org.nuxeo.addon</groupId>
   <artifactId>nuxeo-custom-json-es-document-writer-parent</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
   <name>Nuxeo custom json es document writer parent</name>
   <description />
   <packaging>pom</packaging>
