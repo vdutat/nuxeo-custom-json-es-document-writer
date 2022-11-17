@@ -23,6 +23,8 @@ public class ProductJsonESDocumentWriter extends JsonESDocumentWriter {
 	
 	protected static final String DOC_TYPE = "Product";
 	protected static final String PROP_NAME = "product:Talent";
+	protected static final String RELATEDTEXT_ID_SUFFIX = "titles";
+	
 	protected String relatedText = "";
 
     private static final String RELATEDTEXT_RELATEDTEXTRESOURCES = "relatedtext:relatedtextresources";
@@ -38,13 +40,24 @@ public class ProductJsonESDocumentWriter extends JsonESDocumentWriter {
         log.warn("writeSchemas " + doc.getPathAsString());
         if (DOC_TYPE.equals(doc.getType())) {
             CoreInstance.doPrivileged(doc.getRepositoryName(), (CoreSession session) -> {
-                List<DocumentModel> relatedDocs = Arrays.stream((String[]) doc.getPropertyValue(PROP_NAME)).map(IdRef::new).map(session::getDocument).collect(Collectors.toList());
-                if (log.isDebugEnabled()) {
-                    for (DocumentModel document : relatedDocs) {
-                        log.debug("Found talents: " + document.getPathAsString());
+                if (doc.getProperty(PROP_NAME).isList()) {
+                    List<DocumentModel> relatedDocs = Arrays.stream((String[]) doc.getPropertyValue(PROP_NAME)).map(IdRef::new).map(session::getDocument).collect(Collectors.toList());
+                    if (log.isDebugEnabled()) {
+                        for (DocumentModel document : relatedDocs) {
+                            log.debug("Found talents: " + document.getPathAsString());
+                        }
                     }
+                    relatedText = relatedDocs.stream().map(document -> document.getTitle()).collect(Collectors.joining(" "));
+                    //relatedText += " " + relatedDocs.stream().map(document -> document.getCurrentLifeCycleState()).distinct().collect(Collectors.joining(" "));
+                } else if (doc.getProperty(PROP_NAME).isScalar()) {
+                    IdRef ref = new IdRef((String) doc.getPropertyValue(PROP_NAME));
+                    if (session.exists(ref)) {
+                        DocumentModel document = session.getDocument(ref);
+                        relatedText = document.getTitle();
+                    }
+                } else {
+                    log.warn("The property type of '" + PROP_NAME + "' is not suported.");
                 }
-                relatedText = relatedDocs.stream().map(document -> document.getTitle()).collect(Collectors.joining(" "));
                 if (log.isDebugEnabled()) {
                     log.debug("Related text: " + relatedText);
                 }
@@ -96,7 +109,7 @@ public class ProductJsonESDocumentWriter extends JsonESDocumentWriter {
      * @return ID in 'relatedtext:relatedtextresources'
      */
     protected String getRelatedTextKey(String propertyName) {
-        return propertyName + "::titles";
+        return propertyName + "::" + RELATEDTEXT_ID_SUFFIX;
     }
 
 }
